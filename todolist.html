@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToDo List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    #taskInput {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        padding: 10px;
+        margin-bottom: 8px;
+        background-color: #f2f2f2;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    li:hover {
+        background-color: #e6e6e6;
+    }
+
+    .task-button {
+        background-color: #FF5733;
+        margin-left: 5px;
+    }
+
+    .task-button:hover {
+        background-color: #e6532d;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>To-Do List</h1>
+
+    <input type="text" id="taskInput" placeholder="Enter task">
+    <button onclick="addTask()">Add Task</button>
+
+    <ul id="taskList">
+    </ul>
+
+</div>
+
+<script>
+    // Task management functions
+    let tasks = [];
+
+    function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskText = taskInput.value.trim();
+        if (taskText !== "") {
+            tasks.push(taskText);
+            updateTaskList();
+            taskInput.value = "";
+        }
+    }
+
+    function removeTask(index) {
+        tasks.splice(index, 1);
+        updateTaskList();
+    }
+
+    function editTask(index) {
+        const newTaskText = prompt("Enter new task:");
+        if (newTaskText !== null) {
+            tasks[index] = newTaskText.trim();
+            updateTaskList();
+        }
+    }
+
+    function updateTaskList() {
+        const taskList = document.getElementById("taskList");
+        taskList.innerHTML = "";
+        tasks.forEach((task, index) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = task;
+            listItem.innerHTML += ` <button class="task-button" onclick="removeTask(${index})">Remove</button>`;
+            listItem.innerHTML += ` <button class="task-button" onclick="editTask(${index})">Edit</button>`;
+            taskList.appendChild(listItem);
+        });
+    }
+</script>
+
+</body>
+</html>
